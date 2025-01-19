@@ -10,6 +10,7 @@ def load_json(path: str) -> dict:
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
     except FileNotFoundError as excp:
+        print(path)
         raise Exception(f"file {ntpath.basename(path)} was not found")
     return data
 
