@@ -31,15 +31,18 @@ class GoogleApi(
     provider_name = "google"
 
     def __init__(self, api_keys: Dict = {}):
+        print("shit")
         self.api_settings, self.location = load_provider(
             ProviderDataEnum.KEY,
             provider_name=self.provider_name,
             location=True,
             api_keys=api_keys,
         )
+        print("shit",api_keys)
         self.webhook_settings = load_provider(ProviderDataEnum.KEY, "webhooksite")
         self.webhook_token = self.webhook_settings["webhook_token"]
         self.project_id = self.api_settings["project_id"]
+        print("projhect id", self.project_id)
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = self.location
 
         self.clients = {
