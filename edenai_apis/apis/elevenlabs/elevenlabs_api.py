@@ -43,7 +43,8 @@ class ElevenlabsApi(ProviderInterface, AudioInterface):
             voice_id_from_dict = voice_ids[
                 voice_name
             ]  # Retrieve the ID using the name from the dict
-        except Exception:
+        except Exception as e:
+            print("error", e)
             raise ProviderException("Voice ID not found for the given voice name.")
         return voice_id_from_dict
 
