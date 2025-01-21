@@ -40,15 +40,11 @@ class ElevenlabsApi(ProviderInterface, AudioInterface):
     def __get_voice_id(voice_id: str):
         try:
             voice_name = voice_id.split("_")[-1]  # Extract the name from the voice_id
-            voice_id_from_dict = voice_id
-            '''
-            voice_ids[
+            voice_id_from_dict = voice_ids[
                 voice_name
             ]  # Retrieve the ID using the name from the dict
-            '''
-
         except Exception as e:
-            print("error", e)
+            voice_id_from_dict = voice_id
             raise ProviderException("Voice ID not found for the given voice name.")
         return voice_id_from_dict
 
@@ -70,7 +66,7 @@ class ElevenlabsApi(ProviderInterface, AudioInterface):
         model = ElevenlabsApi.__get_model_from_voice(voice_id=voice_id)
         data = {
             "text": text,
-            "model_id": model,
+            "model_id": voice_id,
             "voice_settings": {"stability": 0.5, "similarity_boost": 0.5},
         }
         response = requests.post(url, json=data, headers=self.headers)
