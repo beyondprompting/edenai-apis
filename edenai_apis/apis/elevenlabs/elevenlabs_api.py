@@ -33,9 +33,9 @@ class ElevenlabsApi(ProviderInterface, AudioInterface):
         }
 
     def __get_model_from_voice(voice_id: str):
-        if 'Multilingual' in voice_id:
-            return 'eleven_multilingual_v2'
-        return 'eleven_monolingual_v1'
+        # if 'Multilingual' in voice_id:
+           return 'eleven_multilingual_v2'
+        #return 'eleven_monolingual_v1'
     
     def __get_voice_id(voice_id: str):
         try:
@@ -66,7 +66,7 @@ class ElevenlabsApi(ProviderInterface, AudioInterface):
         model = ElevenlabsApi.__get_model_from_voice(voice_id=voice_id)
         data = {
             "text": text,
-            "model_id": voice_id,
+            "model_id": model,
             "voice_settings": {"stability": 0.5, "similarity_boost": 0.5},
         }
         response = requests.post(url, json=data, headers=self.headers)
