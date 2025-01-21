@@ -84,7 +84,8 @@ def upload_file_bytes_to_gcs(file_bytes, file_name, bucket_name):
         gcs_client = gcs_client_load()
         # List available buckets
         buckets = list(gcs_client.list_buckets())
-        print(buckets)
+        process_time = 3600
+
         
         # Check if bucket_name is valid
         if not bucket_name:
@@ -99,6 +100,14 @@ def upload_file_bytes_to_gcs(file_bytes, file_name, bucket_name):
 
         blob.upload_from_string(file_bytes.getvalue())
         logging.info(f"File {file_name} uploaded to bucket {bucket_name} successfully.")
+
+        url = blob.generate_signed_url(
+            expiration=datetime.timedelta(seconds=process_time),
+            version="v4",
+        )
+
+        return url
+
     except IndexError as e:
         logging.error(f"IndexError: {str(e)}")
         raise
