@@ -14,6 +14,7 @@ from edenai_apis.loaders.loaders import load_provider
 from edenai_apis.utils.exception import ProviderException
 from edenai_apis.utils.types import ResponseType
 from edenai_apis.utils.upload_s3 import USER_PROCESS, upload_file_bytes_to_s3
+from edenai_apis.utils.upload_gcs import upload_file_bytes_to_gcs
 from .config import voice_ids
 
 
@@ -71,7 +72,7 @@ class ElevenlabsApi(ProviderInterface, AudioInterface):
         data = {
             "text": text,
             "model_id": model,
-            # "voice_settings": {"stability": 0.5, "similarity_boost": 0.5},
+            "voice_settings": {"stability": 0.9, "similarity_boost": 0.9},
         }
         response = requests.post(url, json=data, headers=self.headers)
 
@@ -82,7 +83,7 @@ class ElevenlabsApi(ProviderInterface, AudioInterface):
         audio = base64.b64encode(audio_content.read()).decode("utf-8")
 
         audio_content.seek(0)
-        resource_url = upload_file_bytes_to_s3(
+        resource_url = upload_file_bytes_to_gcs(
             audio_content, f".{audio_format}", USER_PROCESS
         )
 
