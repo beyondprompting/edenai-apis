@@ -70,7 +70,7 @@ class ElevenlabsApi(ProviderInterface, AudioInterface):
         model = ElevenlabsApi.__get_model_from_voice(voice_id=voice_id)
         data = {
             "text": text,
-            "model_id": model,
+            "model_id": ids,
             # "voice_settings": {"stability": 0.5, "similarity_boost": 0.5},
         }
         response = requests.post(url, json=data, headers=self.headers)
