@@ -82,6 +82,9 @@ def upload_file_bytes_to_gcs(file_bytes, file_name, bucket_name):
     try:
         filename = f"{uuid4()}_{file_name}"
         gcs_client = gcs_client_load()
+        # List available buckets
+        buckets = list(gcs_client.list_buckets())
+        print(buckets)
         
         # Check if bucket_name is valid
         if not bucket_name:
