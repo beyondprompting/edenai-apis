@@ -33,16 +33,19 @@ class ElevenlabsApi(ProviderInterface, AudioInterface):
         }
 
     def __get_model_from_voice(voice_id: str):
-        # if 'Multilingual' in voice_id:
-           return 'eleven_multilingual_v2'
-        #return 'eleven_monolingual_v1'
+        # 'Multilingual' in voice_id:
+            return 'eleven_multilingual_v2'
+        # return 'eleven_monolingual_v1'
     
     def __get_voice_id(voice_id: str):
         try:
             voice_name = voice_id.split("_")[-1]  # Extract the name from the voice_id
-            voice_id_from_dict = voice_ids[
+            voice_id_from_dict = voice_id
+            '''
+            voice_ids[
                 voice_name
             ]  # Retrieve the ID using the name from the dict
+            '''
         except Exception as e:
             voice_id_from_dict = voice_id
             raise ProviderException("Voice ID not found for the given voice name.")
