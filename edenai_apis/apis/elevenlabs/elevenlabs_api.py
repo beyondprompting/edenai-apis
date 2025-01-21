@@ -50,7 +50,6 @@ class ElevenlabsApi(ProviderInterface, AudioInterface):
         except Exception as e:
             voice_id_from_dict = voice_id
             raise ProviderException("Voice ID not found for the given voice name.")
-        print(voice_id_from_dict)
         return voice_id_from_dict
 
     def audio__text_to_speech(
@@ -80,7 +79,7 @@ class ElevenlabsApi(ProviderInterface, AudioInterface):
             raise ProviderException(response.text, code=response.status_code)
         
         print(response.headers.get("Content-Type"))  # Ensure it's a valid audio type
-        
+
         audio_content = BytesIO(response.content)
         audio = base64.b64encode(audio_content.read()).decode("utf-8")
 

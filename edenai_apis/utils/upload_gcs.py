@@ -74,7 +74,7 @@ def upload_file_to_gcs(file_path: str, file_name: str, process_type=PROVIDER_PRO
         logging.error(f"IndexError: {str(e)}")
         raise
     except Exception as e:
-        logging.error(f"Unexpected Exception2: {str(e)}")
+        logging.error(f"Unexpected Exception: {str(e)}")
         raise
 
 def upload_file_bytes_to_gcs(file_bytes, file_name, bucket_name):
@@ -94,7 +94,7 @@ def upload_file_bytes_to_gcs(file_bytes, file_name, bucket_name):
         if not file_bytes:
             raise ValueError("File bytes are empty")
 
-        blob.upload_from_string(file_bytes, rewind=True)
+        blob.upload_from_string(file_bytes.getvalue())
         logging.info(f"File {file_name} uploaded to bucket {bucket_name} successfully.")
     except IndexError as e:
         logging.error(f"IndexError: {str(e)}")
