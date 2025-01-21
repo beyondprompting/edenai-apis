@@ -13,7 +13,7 @@ from edenai_apis.loaders.loaders import load_provider
 from edenai_apis.settings import keys_path
 
 BUCKET = "mow-ai-engine-dev"
-BUCKET_RESOURCE = ""
+BUCKET_RESOURCE = "mow-ai-engine-dev"
 
 PROVIDER_PROCESS = "provider_process"
 USER_PROCESS = "users_process"
