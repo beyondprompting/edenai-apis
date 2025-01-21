@@ -67,14 +67,14 @@ def upload_file_to_gcs(file_path: str, file_name: str, process_type=PROVIDER_PRO
         if not file_path:
             raise ValueError("File path is empty")
 
-        blob.upload_from_filename(file_path)
+        blob.upload_from_filename(file_path, rewind=True)
         func_call, process_time, _ = set_time_and_presigned_url_process(process_type)
         return func_call(blob.name, process_time)
     except IndexError as e:
         logging.error(f"IndexError: {str(e)}")
         raise
     except Exception as e:
-        logging.error(f"Unexpected Exception: {str(e)}")
+        logging.error(f"Unexpected Exception2: {str(e)}")
         raise
 
 def upload_file_bytes_to_gcs(file_bytes, file_name, bucket_name):
@@ -94,13 +94,13 @@ def upload_file_bytes_to_gcs(file_bytes, file_name, bucket_name):
         if not file_bytes:
             raise ValueError("File bytes are empty")
 
-        blob.upload_from_string(file_bytes)
+        blob.upload_from_string(file_bytes, rewind=True)
         logging.info(f"File {file_name} uploaded to bucket {bucket_name} successfully.")
     except IndexError as e:
         logging.error(f"IndexError: {str(e)}")
         raise
     except Exception as e:
-        logging.error(f"Unexpected Exception: {str(e)}")
+        logging.error(f"Unexpected Exception1: {str(e)}")
         raise
 
 
