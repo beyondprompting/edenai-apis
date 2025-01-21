@@ -12,8 +12,9 @@ from edenai_apis.loaders.data_loader import ProviderDataEnum
 from edenai_apis.loaders.loaders import load_provider
 from edenai_apis.settings import keys_path
 
-BUCKET = "mow-ai-engine-dev"
-BUCKET_RESOURCE = "mow-ai-engine-dev"
+# Get BUCKET from an enviroment variable BUCKET_NAME
+BUCKET = os.getenv("BUCKET_NAME")
+BUCKET_RESOURCE = os.getenv("BUCKET_NAME")
 
 PROVIDER_PROCESS = "provider_process"
 USER_PROCESS = "users_process"
@@ -42,7 +43,9 @@ def set_time_and_presigned_url_process(process_type: str) -> Tuple[Callable, int
 
 def gcs_client_load() -> storage.Client:
     """Initializes and returns the Google Cloud Storage client."""
-    return storage.Client()
+    
+    # Return the storage client
+    return storage.Client.from_service_account_json(f"{keys_path}/google_settings.json")
 
 def set_time_and_presigned_url_process(process_type):
     # Mock implementation of set_time_and_presigned_url_process
@@ -82,11 +85,9 @@ def upload_file_bytes_to_gcs(file_bytes, file_name, bucket_name):
     try:
         filename = f"{uuid4()}_{file_name}"
         gcs_client = gcs_client_load()
-        # List available buckets
-        buckets = list(gcs_client.list_buckets())
-        process_time = 3600
 
-        
+        process_time = URL_SHORT_PERIOD
+
         # Check if bucket_name is valid
         if not bucket_name:
             raise ValueError("Bucket name is empty")
@@ -112,7 +113,7 @@ def upload_file_bytes_to_gcs(file_bytes, file_name, bucket_name):
         logging.error(f"IndexError: {str(e)}")
         raise
     except Exception as e:
-        logging.error(f"Unexpected Exception1: {str(e)}")
+        logging.error(f"Unexpected Exception: {str(e)}")
         raise
 
 
