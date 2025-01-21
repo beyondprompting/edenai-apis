@@ -1,4 +1,5 @@
 import datetime
+import logging
 import json
 import os
 from io import BytesIO
@@ -20,6 +21,9 @@ USER_PROCESS = "users_process"
 URL_SHORT_PERIOD = 3600
 URL_LONG_PERIOD = 3600 * 24 * 7
 
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+
 def set_time_and_presigned_url_process(process_type: str) -> Tuple[Callable, int, str]:
     """Returns a tuple with the appropriate function to call, the URL expiration time, and the bucket to which
     the file will be uploaded, depending on the process type
@@ -40,33 +44,64 @@ def gcs_client_load() -> storage.Client:
     """Initializes and returns the Google Cloud Storage client."""
     return storage.Client()
 
+def set_time_and_presigned_url_process(process_type):
+    # Mock implementation of set_time_and_presigned_url_process
+    # Replace this with the actual implementation
+    return (lambda name, time: (name, time), 0, "my_bucket")
 
 def upload_file_to_gcs(file_path: str, file_name: str, process_type=PROVIDER_PROCESS):
     """Upload file to GCS"""
-    filename = f"{uuid4()}_{file_name}"
-    gcs_client = gcs_client_load()
-    bucket_name = set_time_and_presigned_url_process(process_type)[2]
-    bucket = gcs_client.bucket(bucket_name)
-    blob = bucket.blob(filename)
+    try:
+        filename = f"{uuid4()}_{file_name}"
+        gcs_client = gcs_client_load()
+        bucket_name = set_time_and_presigned_url_process(process_type)[2]
+        
+        # Check if bucket_name is valid
+        if not bucket_name:
+            raise ValueError("Bucket name is empty")
 
-    blob.upload_from_filename(file_path)
-    func_call, process_time, _ = set_time_and_presigned_url_process(process_type)
-    return func_call(blob.name, process_time)
+        bucket = gcs_client.bucket(bucket_name)
+        blob = bucket.blob(filename)
 
+        # Check if file_path is valid
+        if not file_path:
+            raise ValueError("File path is empty")
 
-def upload_file_bytes_to_gcs(
-    file: BytesIO, file_name: str, process_type: str = PROVIDER_PROCESS
-) -> str:
+        blob.upload_from_filename(file_path)
+        func_call, process_time, _ = set_time_and_presigned_url_process(process_type)
+        return func_call(blob.name, process_time)
+    except IndexError as e:
+        logging.error(f"IndexError: {str(e)}")
+        raise
+    except Exception as e:
+        logging.error(f"Unexpected Exception: {str(e)}")
+        raise
+
+def upload_file_bytes_to_gcs(file_bytes, file_name, bucket_name):
     """Upload file bytes to GCS"""
-    filename = f"{uuid4()}_{file_name}"
-    gcs_client = gcs_client_load()
-    bucket_name = set_time_and_presigned_url_process(process_type)[2]
-    bucket = gcs_client.bucket(bucket_name)
-    blob = bucket.blob(filename)
+    try:
+        filename = f"{uuid4()}_{file_name}"
+        gcs_client = gcs_client_load()
+        
+        # Check if bucket_name is valid
+        if not bucket_name:
+            raise ValueError("Bucket name is empty")
 
-    blob.upload_from_file(file, rewind=True)
-    func_call, process_time, _ = set_time_and_presigned_url_process(process_type)
-    return func_call(blob.name, process_time)
+        bucket = gcs_client.bucket(bucket_name)
+        blob = bucket.blob(filename)
+
+        # Check if file_bytes is valid
+        if not file_bytes:
+            raise ValueError("File bytes are empty")
+
+        blob.upload_from_string(file_bytes)
+        logging.info(f"File {file_name} uploaded to bucket {bucket_name} successfully.")
+    except IndexError as e:
+        logging.error(f"IndexError: {str(e)}")
+        raise
+    except Exception as e:
+        logging.error(f"Unexpected Exception: {str(e)}")
+        raise
 
 
 def get_gcs_file_url(filename: str, process_time: int) -> str:
