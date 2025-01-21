@@ -22,9 +22,6 @@ USER_PROCESS = "users_process"
 URL_SHORT_PERIOD = 3600
 URL_LONG_PERIOD = 3600 * 24 * 7
 
-# Configure logging
-logging.basicConfig(level=logging.DEBUG)
-
 def set_time_and_presigned_url_process(process_type: str) -> Tuple[Callable, int, str]:
     """Returns a tuple with the appropriate function to call, the URL expiration time, and the bucket to which
     the file will be uploaded, depending on the process type
