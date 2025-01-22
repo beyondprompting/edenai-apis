@@ -63,5 +63,6 @@ from .twelvelabs import TwelveLabsApi
 from .clipdrop import ClipdropApi
 from .leonardo import LeonardoApi
 from .xai import XAiApi
+from .ollama import OllamaApi
 
 # THIS NEEDS TO BE DONE AUTOMATICALLY
