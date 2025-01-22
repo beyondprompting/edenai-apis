@@ -4,7 +4,7 @@ import asyncio
 import os
 from time import sleep
 from typing import Dict, List, Literal, Optional, Sequence, Union
-from app.tasks.text.chat.helpers import get_tool_call_from_history_by_id
+from edenai_apis.features.text.chat.helpers import get_tool_call_from_history_by_id
 
 from openai import OpenAI
 
