@@ -11,63 +11,63 @@ from openai import OpenAI
 import requests
 from pydantic_core._pydantic_core import ValidationError
 
-from app.tasks import TextInterface
-from app.tasks.text.anonymization import AnonymizationDataClass
-from app.tasks.text.anonymization.anonymization_dataclass import (
+from edenai_apis.features import TextInterface
+from edenai_apis.features.text.anonymization import AnonymizationDataClass
+from edenai_apis.features.text.anonymization.anonymization_dataclass import (
     AnonymizationEntity,
 )
-from app.tasks.text.anonymization.category import CategoryType
-from app.tasks.text.chat import ChatDataClass, ChatMessageDataClass
-from app.tasks.text.chat.chat_dataclass import (
+from edenai_apis.features.text.anonymization.category import CategoryType
+from edenai_apis.features.text.chat import ChatDataClass, ChatMessageDataClass
+from edenai_apis.features.text.chat.chat_dataclass import (
     StreamChat,
     ChatStreamResponse,
     ToolCall,
 )
-from app.tasks.text.code_generation.code_generation_dataclass import (
+from edenai_apis.features.text.code_generation.code_generation_dataclass import (
     CodeGenerationDataClass,
 )
-from app.tasks.text.custom_classification import (
+from edenai_apis.features.text.custom_classification import (
     CustomClassificationDataClass,
 )
-from app.tasks.text.custom_named_entity_recognition import (
+from edenai_apis.features.text.custom_named_entity_recognition import (
     CustomNamedEntityRecognitionDataClass,
 )
-from app.tasks.text.embeddings import EmbeddingDataClass, EmbeddingsDataClass
-from app.tasks.text.generation import GenerationDataClass
-from app.tasks.text.keyword_extraction import KeywordExtractionDataClass
-from app.tasks.text.keyword_extraction.keyword_extraction_dataclass import (
+from edenai_apis.features.text.embeddings import EmbeddingDataClass, EmbeddingsDataClass
+from edenai_apis.features.text.generation import GenerationDataClass
+from edenai_apis.features.text.keyword_extraction import KeywordExtractionDataClass
+from edenai_apis.features.text.keyword_extraction.keyword_extraction_dataclass import (
     InfosKeywordExtractionDataClass,
 )
-from app.tasks.text.moderation import ModerationDataClass, TextModerationItem
-from app.tasks.text.moderation.category import (
+from edenai_apis.features.text.moderation import ModerationDataClass, TextModerationItem
+from edenai_apis.features.text.moderation.category import (
     CategoryType as CategoryTypeModeration,
 )
-from app.tasks.text.named_entity_recognition.named_entity_recognition_dataclass import (
+from edenai_apis.features.text.named_entity_recognition.named_entity_recognition_dataclass import (
     NamedEntityRecognitionDataClass,
 )
-from app.tasks.text.prompt_optimization import (
+from edenai_apis.features.text.prompt_optimization import (
     PromptDataClass,
     PromptOptimizationDataClass,
 )
-from app.tasks.text.question_answer import QuestionAnswerDataClass
-from app.tasks.text.search import InfosSearchDataClass, SearchDataClass
-from app.tasks.text.sentiment_analysis import SentimentAnalysisDataClass
-from app.tasks.text.spell_check.spell_check_dataclass import (
+from edenai_apis.features.text.question_answer import QuestionAnswerDataClass
+from edenai_apis.features.text.search import InfosSearchDataClass, SearchDataClass
+from edenai_apis.features.text.sentiment_analysis import SentimentAnalysisDataClass
+from edenai_apis.features.text.spell_check.spell_check_dataclass import (
     SpellCheckDataClass,
     SpellCheckItem,
     SuggestionItem,
 )
-from app.tasks.text.summarize import SummarizeDataClass
-from app.tasks.text.topic_extraction import TopicExtractionDataClass
-from app.utils.conversion import (
+from edenai_apis.features.text.summarize import SummarizeDataClass
+from edenai_apis.features.text.topic_extraction import TopicExtractionDataClass
+from edenai_apis.utils.conversion import (
     closest_above_value,
     construct_word_list,
     find_all_occurrence,
     standardized_confidence_score,
 )
-from app.utils.exception import ProviderException
-from app.utils.metrics import METRICS
-from app.utils.types import ResponseType
+from edenai_apis.utils.exception import ProviderException
+from edenai_apis.utils.metrics import METRICS
+from edenai_apis.utils.types import ResponseType
 from .helpers import (
     construct_anonymization_context,
     construct_classification_instruction,

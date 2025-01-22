@@ -5,8 +5,8 @@ from typing import List, Optional, Dict
 
 from requests import Response
 
-from app.utils.exception import ProviderException
-from app.utils.languages import get_language_name_from_code
+from edenai_apis.utils.exception import ProviderException
+from edenai_apis.utils.languages import get_language_name_from_code
 
 from .prompts_guidelines import (
     anthropic_prompt_guidelines,

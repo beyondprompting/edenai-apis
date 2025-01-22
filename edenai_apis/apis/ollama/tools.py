@@ -2,7 +2,7 @@ from typing import Any, Dict
 from pydantic import BaseModel
 from pydantic_core._pydantic_core import ValidationError
 from docstring_parser import parse
-from app.utils.exception import ProviderException
+from edenai_apis.utils.exception import ProviderException
 
 
 class OllamaFunctionTools:

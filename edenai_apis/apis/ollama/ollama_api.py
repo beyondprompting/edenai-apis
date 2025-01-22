@@ -6,11 +6,11 @@ import aiohttp
 import openai
 from openai import OpenAI
 
-from app.apis.ollama.ollama_text_api import OllamaTextApi
-from app.apis.ollama.helpers import moderate_if_exists
-from app.tasks.provider.provider_interface import ProviderInterface
-from app.utils.loaders.data_loader import ProviderDataEnum
-from app.utils.loaders.loaders import load_provider
+from edenai_apis.apis.ollama.ollama_text_api import OllamaTextApi
+from edenai_apis.apis.ollama.helpers import moderate_if_exists
+from edenai_apis.features.provider.provider_interface import ProviderInterface
+from edenai_apis.loaders.data_loader import ProviderDataEnum
+from edenai_apis.loaders.loaders import load_provider
 from asgiref.sync import async_to_sync
 
 

@@ -1,4 +1,4 @@
-from app.utils.exception import (
+from edenai_apis.utils.exception import (
     ProviderErrorLists,
     ProviderInternalServerError,
     ProviderInvalidInputError,
