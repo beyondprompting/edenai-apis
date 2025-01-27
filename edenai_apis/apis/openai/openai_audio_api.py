@@ -109,7 +109,7 @@ class OpenaiAudioApi(AudioInterface):
         if not audio_format:
             audio_format = "mp3"
         payload = {
-            "model": "tts-1",
+            "model": "tts-1-hd",
             "input": text,
             "voice": voice_id,
             "speed": speed,
