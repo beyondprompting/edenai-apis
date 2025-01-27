@@ -111,7 +111,7 @@ class OpenaiAudioApi(AudioInterface):
         payload = {
             "model": "tts-1",
             "input": text,
-            "voice": voice_id[3:],
+            "voice": voice_id,
             "speed": speed,
             "response_format": audio_format,
         }
