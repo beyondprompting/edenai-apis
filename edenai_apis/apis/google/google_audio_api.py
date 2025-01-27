@@ -31,7 +31,8 @@ from edenai_apis.utils.types import (
     AsyncResponseType,
     ResponseType,
 )
-from edenai_apis.utils.upload_s3 import USER_PROCESS, upload_file_bytes_to_s3
+
+from edenai_apis.utils.upload_gcs import BUCKET, upload_file_bytes_to_gcs
 
 
 class GoogleAudioApi(AudioInterface):
@@ -90,7 +91,10 @@ class GoogleAudioApi(AudioInterface):
         audio = base64.b64encode(audio_content.read()).decode("utf-8")
 
         audio_content.seek(0)
-        resource_url = upload_file_bytes_to_s3(audio_content, f".{ext}", USER_PROCESS)
+        
+        resource_url = upload_file_bytes_to_gcs(
+            audio_content, f".{audio_format}", BUCKET
+        )
 
         standardized_response = TextToSpeechDataClass(
             audio=audio, voice_type=voice_type, audio_resource_url=resource_url
