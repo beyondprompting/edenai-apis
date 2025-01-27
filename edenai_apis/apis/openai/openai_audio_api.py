@@ -21,7 +21,8 @@ from edenai_apis.utils.types import (
     AsyncResponseType,
     ResponseType,
 )
-from edenai_apis.utils.upload_s3 import USER_PROCESS, upload_file_bytes_to_s3
+
+from edenai_apis.utils.upload_gcs import BUCKET, upload_file_bytes_to_gcs
 
 from .helpers import convert_tts_audio_rate
 
@@ -104,7 +105,6 @@ class OpenaiAudioApi(AudioInterface):
         sampling_rate: int,
     ) -> ResponseType[TextToSpeechDataClass]:
         url = "https://api.openai.com/v1/audio/speech"
-        print("request")
         speed = convert_tts_audio_rate(speaking_rate)
         if not audio_format:
             audio_format = "mp3"
@@ -121,9 +121,11 @@ class OpenaiAudioApi(AudioInterface):
         audio = base64.b64encode(audio_content.read()).decode("utf-8")
         voice_type = 1
         audio_content.seek(0)
-        resource_url = upload_file_bytes_to_s3(
-            audio_content, f".{audio_format}", USER_PROCESS
+
+        resource_url = upload_file_bytes_to_gcs(
+            audio_content, f".{audio_format}", BUCKET
         )
+
         standardized_response = TextToSpeechDataClass(
             audio=audio, voice_type=voice_type, audio_resource_url=resource_url
         )
